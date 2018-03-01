@@ -57,10 +57,12 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
-    {
-        //
-    }
+     public function update(Request $request, Category $category)
+     {
+         $category->update($request->except('slug'));
+         return redirect()->route('admin.category.index');
+     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -68,15 +70,15 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(Category $category)
-    {
-      return view('admin.categories.edit', [
-       'category'   => $category,
-       'categories' => Category::with('children')->where('parent_id', '0')->get(),
-       'delimiter'  => ''
-       ]);
+     public function edit(Category $category)
+     {
+         return view('admin.categories.edit', [
+           'category'   => $category,
+           'categories' => Category::with('children')->where('parent_id', '0')->get(),
+           'delimiter'  => ''
+           ]);
+     }
 
-    }
 
     /**
      * Update the specified resource in storage.
