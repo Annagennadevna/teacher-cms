@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Article;
+use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -26,10 +27,14 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-    }
+     public function create()
+     {
+         return view('admin.articles.create', [
+            'article'    => [],
+            'categories' => Category::with('children')->where('parent_id', 0)->get(),
+            'delimiter'  => ''
+          ]);
+     }
 
     /**
      * Store a newly created resource in storage.
@@ -37,11 +42,16 @@ class ArticleController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
-    }
-
+     public function store(Request $request)
+     {
+     $article = Article::create($request->all());
+     // Categories
+     if ($request->input('categories')) {
+         $article->categories()->attach($request->input('categories'));
+     }
+     return redirect()->route('admin.article.index');
+   }
+   
     /**
      * Display the specified resource.
      *
