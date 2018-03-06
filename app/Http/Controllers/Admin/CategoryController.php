@@ -1,8 +1,11 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
+
 use App\Category;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+
 class CategoryController extends Controller
 {
     /**
@@ -82,10 +85,9 @@ class CategoryController extends Controller
      * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-     public function destroy(Category $category)
-     {
-         $category->delete();
-         return redirect()->route('admin.category.index');
-     }
-
+    public function destroy(Category $category)
+    {
+        $category->delete();
+        return redirect()->route('admin.category.index');
+    }
 }
