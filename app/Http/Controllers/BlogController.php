@@ -1,8 +1,12 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use App\Article;
 use App\Category;
+use App\Page;
 use Illuminate\Http\Request;
+
 class BlogController extends Controller
 {
     public function category($slug)
@@ -13,12 +17,21 @@ class BlogController extends Controller
           'articles' => $category->articles()->where('published', 1)->paginate(12)
         ]);
     }
+
     public function article($slug)
     {
         return view('blog.article', [
           'article' => Article::where('slug', $slug)->first()
         ]);
     }
+
+    public function page($slug)
+    {
+        return view('blog.page', [
+          'page' => Page::where('slug', $slug)->first()
+        ]);
+    }
+
     public function search(Request $request)
     {
         $search = $request->input('search');
